@@ -1,86 +1,53 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <stdexcept> 
 
-double add(double a, double b){
-    double sum = a + b;
-    return sum;
-}
-double sub(double a, double b){
-    double sum = a - b;
-    return sum;
-}
-double mutl(double a, double b){
-    double sum = a * b;
-    return sum;
-}
-double div(double a, double b){
-    double sum = a / b;
-    return sum;
-}
-double pow(double a, double b){
-    double sum = pow(a,b);
-    return sum;
-}
-double root(double a){
-    double sum = sqrt(a);
-    return sum;
-}
+int main() {
+    double num1;
+    double num2;
+    std::string input;
+    std::cout << "cmath:";
+    std::getline(std::cin, input);
 
+    size_t pos =input.find_first_of("+-*/^%");
+    if (pos == std::string::npos) {
+        std::cerr << "Error did not find operation.\n";
+        return 1;
+    }
 
-int main(){
-    double a;
-    double b;
-    std::string operation;
-    std::cout << "+,-,*,/,^,root" << "\n";
-    std::cin >> operation;
-    if (operation == "+"){
-            std::cout << "number:";
-            std::cin >> a;
-            std::cout << "number:";
-            std::cin >> b;
-            double sum = add(a,b);
-            std::cout << a << "+" << b << "=" << sum << "\n";
-        }
-    if (operation == "-"){
-            std::cout << "number:";
-            std::cin >> a;
-            std::cout << "number:";
-            std::cin >> b;
-            double sum = sub(a,b);
-            std::cout << a << "-" << b << "=" << sum << "\n";
-        }
-    if (operation == "*"){
-            std::cout << "number:";
-            std::cin >> a;
-            std::cout << "number:";
-            std::cin >> b;
-            double sum = mutl(a,b);
-            std::cout << a << "*" << b << "=" << sum << "\n";
-        }
-    if (operation == "/"){
-            std::cout << "number:";
-            std::cin >> a;
-            std::cout << "number:";
-            std::cin >> b;
-            double sum = div(a,b);
-            std::cout << a << "/" << b << "=" << sum << "\n";
-        }
-    if (operation == "^"){
-        std::cout << "number:";
-        std::cin >> a;
-        std::cout << "number:";
-        std::cin >> b;
-        double sum = pow(a,b);
-        std::cout << a << "^" << b << "=" << sum << "\n";
-        }
-    if (operation == "root"){
-        std::cout << "number:";
-        std::cin >> a;
-        double sum = root(a);
-        std::cout << "√" << a <<"=" << sum << "\n";
-        }
+    char operation = input[pos];
+
+    std::string firstPart = input.substr(0, pos);
+    std::string secondPart = input.substr(pos + 1);
+    try {
+        num1 = std::stod(firstPart);
+        num2 = std::stod(secondPart);
     
-    
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Conversion error: " << e.what() << std::endl;
+    } catch (const std::out_of_range& e) {
+        std::cerr << "Number out of range: " << e.what() << std::endl;
+    }
+
+    if (operation == '+'){
+        std::cout << num1 << " + " << num2 << " = " << num1+num2 << "\n";
+    }
+    if (operation == '-'){
+        std::cout << num1 << " - " << num2 << " = " << num1-num2 << "\n";
+    }
+    if (operation == '*'){
+        std::cout << num1 << " * " << num2 << " = " << num1*num2 << "\n";
+    }
+    if (operation == '/'){
+        std::cout << num1 << " / " << num2 << " = " << num1/num2 << "\n";
+    }
+    if (operation == '^'){
+        std::cout << num1 << " ^ " << num2 << " = " << std::pow(num1,num2) << "\n";
+    }
+    if (operation == '%'){
+        std::cout << num1 << " % " << " = " << std::sqrt(num1) << "\n";
+    }
+
     return 0;
 }
